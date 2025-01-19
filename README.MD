@@ -1,4 +1,4 @@
-![Alt text](https://www.dropbox.com/scl/fi/lxlfzafrhgkaddzl3y98j/agent-screenshot.png) 
+![Alt text](https://www.dropbox.com/scl/fi/lxlfzafrhgkaddzl3y98j/agent-screenshot.png?e=1) 
 
 # LangChain Agent Starter
 
