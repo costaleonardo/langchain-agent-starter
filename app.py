@@ -16,41 +16,8 @@ load_dotenv()
 # Initialize the LLM
 llm = ChatOpenAI(model="gpt-4", temperature=0)
 
-# Wordpress Auth
-WP_SITE_URL = os.getenv("WP_SITE_URL")
-USERNAME = os.getenv("USERNAME")
-APP_PASSWORD = os.getenv("APP_PASSWORD")
-auth = HTTPBasicAuth(USERNAME, APP_PASSWORD)
-
 # Define tools
 python_tool = PythonREPLTool()
-
-def get_site_info(_=None):
-    try:
-        response = requests.get(f"{WP_SITE_URL}/wp-json/", auth=auth)
-        response.raise_for_status()
-        metadata = response.json()
-        site_info = {
-            "Name": metadata.get('name', 'N/A'),
-            "Description": metadata.get('description', 'N/A'),
-            "URL": metadata.get('url', 'N/A'),
-            "Home URL": metadata.get('home', 'N/A'),
-            "GMT Offset": metadata.get('gmt_offset', 'N/A'),
-            "Timezone": metadata.get('timezone_string', 'N/A'),
-            "Authentication": metadata.get('authentication', 'N/A'),
-            "Site Icon": metadata.get('site_icon', 'N/A'),
-            "Site Icon URL": metadata.get('site_icon_url', 'N/A')
-        }
-        return "\n".join([f"{key}: {value}" for key, value in site_info.items()])
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Error: {e}")
-        return f"Error fetching site metadata: {e}"
-
-get_site_meta = Tool(
-    name="Site Meta Fetcher",
-    func=get_site_info,
-    description="Use this tool to fetch the site's meta information."
-)
 
 python_repl = Tool(
     name="Python REPL",
@@ -59,8 +26,7 @@ python_repl = Tool(
 )
 
 tools = [
-    python_repl,
-    get_site_meta
+    python_repl
 ]
 
 # Define a prompt template (optional customization)
