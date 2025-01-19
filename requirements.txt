@@ -1,0 +1,7 @@
+gradio
+langchain
+langchain-community
+langchain-experimental
+requests
+python-dotenv
+openai
